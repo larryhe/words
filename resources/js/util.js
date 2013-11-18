@@ -1,4 +1,4 @@
-define([ 'jQuery', 'Underscore' ], 
+define([ 'jquery', 'underscore' ], 
         function($, _){
 
             var dicts = [
@@ -24,15 +24,15 @@ define([ 'jQuery', 'Underscore' ],
                     item,
                     left;
                 if(line && line.indexOf('[') > 0){
-                    word.word = line.substring(0, line.indexOf('['));
-                    left = line.substirng(line.indexOf('['));
+                    word.word = $.trim(line.substring(0, line.indexOf('[')));
+                    left = line.substring(line.indexOf('['));
                     while(left.indexOf(']') > 0){
                         end = left.indexOf(']');
                         section = left.substring(left.indexOf('[') + 1 , end);
                         section = $.trim(section);
                         left = left.substring(end + 1);
                         if(idx == 0){
-                            word.phonetic = section;
+                            word.phonetic = '[' + section + ']';
                         }else{
                             word.explains = word.explains || [];
                             items = section.split("Example:");

@@ -2,7 +2,7 @@
 <html lang="en" data-framework="backbonejs">
 	<head>
 		<meta charset="utf-8">
-		<title>My English New Words Dictionary</title>
+		<title>My Words Library</title>
 		<link rel="stylesheet" href="resources/css/base.css">
 		<link rel="stylesheet" href="resources/css/bootstrap.css">
 		<script src="resources/js/base.js"></script>
@@ -11,14 +11,20 @@
 		<section id="wordapp">
 			<header id="header">
 				<h1>My Words</h1>
-				<input id="new-todo" placeholder="What needs to be done?" autofocus>
 			</header>
 			<section id="main">
-				<input id="toggle-all" type="checkbox">
-				<label for="toggle-all">Mark all as complete</label>
-				<ul id="todo-list"></ul>
-			</section>
-			<footer id="footer"></footer>
+                <ul class="nav nav-pills">
+                    <li class="active"><a href="#">Review words</a></li>
+                    <li><a href="#">Add new word</a></li>
+                    <li><a href="#">Setting</a></li>
+                </ul>
+                <section id="review-words">
+                </section>
+                <section id="new-words">
+                </section>
+                <section id="settings">
+                </section>
+                </section>
 		</section>
 		<footer id="info">
 			<p>Written by <a href="http://larryhe.me">Larry He</a></p>

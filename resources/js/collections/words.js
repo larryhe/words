@@ -2,39 +2,33 @@
 define([
 	'underscore',
 	'backbone',
-	'backboneLocalstorage',
+    'util',
 	'models/word'
-], function (_, Backbone, Store, Word) {
+], function (_, Backbone, Util, Word) {
 	'use strict';
 
 	var WordsCollection = Backbone.Collection.extend({
 		// Reference to this collection's model.
 		model: Word,
-
-		// Save all of the Word items under the `"Word"` namespace.
-		localStorage: new Store('words-backbone'),
-
-		// Filter down the list of all word items that are finished.
-		completed: function () {
-			return this.filter(function (word) {
-				return word.get('completed');
-			});
-		},
-
+        //index of current page default is 0
+        idx: 0,
 		// Filter down the list to only word items that are still not finished.
-		remaining: function () {
-			return this.without.apply(this, this.completed());
+		next: function () {
+		    this.idx = this.idx % this.length;
 		},
-
-		// We keep the word in sequential order, despite being saved by unordered
-		// GUID in the database. This generates the next order number for new items.
-		nextOrder: function () {
-			if (!this.length) {
-				return 1;
-			}
-			return this.last().get('order') + 1;
+		prev: function () {
+			if (this.idx == 0) {
+				this.idx = this.length -1;
+			}else{
+                this.idx--;
+            }
 		},
-
+        current: function() {
+            return this.at(this.idx);
+        },
+        parse: function(response) {
+            return Util.splitWords(response);
+        },
 		// word are sorted by their original insertion order.
 		comparator: function (word) {
 			return word.get('order');

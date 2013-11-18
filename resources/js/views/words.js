@@ -12,7 +12,7 @@ define([
 
 		tagName:  'li',
 
-		template: _.template(todosTemplate),
+		template: _.template(wordsTemplate),
 
 		// The DOM events specific to an item.
 		events: {

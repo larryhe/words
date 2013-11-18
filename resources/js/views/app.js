@@ -5,9 +5,9 @@ define([
 	'backbone',
 	'collections/words',
 	'views/words',
-	'text!templates/stats.html',
-	'common'
-], function ($, _, Backbone, Words, WordView, statsTemplate, Common) {
+	'text!templates/words.html',
+	'util'
+], function ($, _, Backbone, Words, WordView, wordsTemplate, Util) {
 	'use strict';
 
 	var AppView = Backbone.View.extend({
@@ -17,7 +17,7 @@ define([
 		el: '#wordapp',
 
 		// Compile our stats template
-		template: _.template(statsTemplate),
+		template: _.template(wordsTemplate),
 
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
@@ -30,42 +30,25 @@ define([
 		// collection, when items are added or changed. Kick things off by
 		// loading any preexisting Words that might be saved in *localStorage*.
 		initialize: function () {
-			//this.allCheckbox = this.$('#toggle-all')[0];
-			this.$input = this.$('#new-word');
-			this.$footer = this.$('#footer');
 			this.$main = this.$('#main');
-
+            this.$words = $('#review-words', this.$main);
 			this.listenTo(Words, 'add', this.addOne);
 			this.listenTo(Words, 'reset', this.addAll);
 			this.listenTo(Words, 'change:completed', this.filterOne);
 			this.listenTo(Words, 'filter', this.filterAll);
 			this.listenTo(Words, 'all', this.render);
 
-			Words.fetch();
+			Words.fetch({url: '/dict/advanced-words.txt', dataType: 'text'});
 		},
 
 		// Re-rendering the App just means refreshing the statistics -- the rest
 		// of the app doesn't change.
 		render: function () {
-			var completed = Words.completed().length;
-			var remaining = Words.remaining().length;
-
 			if (Words.length) {
 				this.$main.show();
-				this.$footer.show();
-
-				this.$footer.html(this.template({
-					completed: completed,
-					remaining: remaining
-				}));
-
-				this.$('#filters li a')
-					.removeClass('selected')
-					.filter('[href="#/' + (Common.WordFilter || '') + '"]')
-					.addClass('selected');
+                this.$words.html(this.template(Words.current().attributes));
 			} else {
 				this.$main.hide();
-				this.$footer.hide();
 			}
 
 			//this.allCheckbox.checked = !remaining;
@@ -104,7 +87,7 @@ define([
 		// If you hit return in the main input field, create new **Word** model,
 		// persisting it to *localStorage*.
 		createOnEnter: function (e) {
-			if (e.which !== Common.ENTER_KEY || !this.$input.val().trim()) {
+			if (e.which !== Util.ENTER_KEY || !this.$input.val().trim()) {
 				return;
 			}
 

@@ -11,7 +11,7 @@ define([
 		defaults: {
 			word: '',
             phonetic: '',
-			meaning: []
+			explains: []
 		},
 
 		// Toggle the `completed` state of this word item.
