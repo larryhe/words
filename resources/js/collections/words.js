@@ -14,7 +14,7 @@ define([
         idx: 0,
 		// Filter down the list to only word items that are still not finished.
 		next: function () {
-		    this.idx = this.idx % this.length;
+		    this.idx = (this.idx + 1) % this.length;
 		},
 		prev: function () {
 			if (this.idx == 0) {

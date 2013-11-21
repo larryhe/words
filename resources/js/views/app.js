@@ -21,9 +21,8 @@ define([
 
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
-			'keypress #new-word':		'createOnEnter',
-			'click #clear-completed':	'clearCompleted',
-			'click #toggle-all':		'toggleAllComplete'
+			'click #review-words .left':	'prevWord',
+			'click #review-words .right':	'nextWord'
 		},
 
 		// At initialization we bind to the relevant events on the `Words`
@@ -31,7 +30,7 @@ define([
 		// loading any preexisting Words that might be saved in *localStorage*.
 		initialize: function () {
 			this.$main = this.$('#main');
-            this.$words = $('#review-words', this.$main);
+            this.$word = $('#review-words .word-sec', this.$main);
 			this.listenTo(Words, 'add', this.addOne);
 			this.listenTo(Words, 'reset', this.addAll);
 			this.listenTo(Words, 'change:completed', this.filterOne);
@@ -46,12 +45,11 @@ define([
 		render: function () {
 			if (Words.length) {
 				this.$main.show();
-                this.$words.html(this.template(Words.current().attributes));
+                this.$word.html(this.template(Words.current().attributes));
 			} else {
 				this.$main.hide();
 			}
-
-			//this.allCheckbox.checked = !remaining;
+			return this;
 		},
 
 		// Add a single word item to the list by creating a view for it, and
@@ -75,39 +73,14 @@ define([
 			Words.each(this.filterOne, this);
 		},
 
-		// Generate the attributes for a new Word item.
-		newAttributes: function () {
-			return {
-				title: this.$input.val().trim(),
-				order: Words.nextOrder(),
-				completed: false
-			};
+		prevWord: function () {
+            Words.prev();
+            this.render();
 		},
 
-		// If you hit return in the main input field, create new **Word** model,
-		// persisting it to *localStorage*.
-		createOnEnter: function (e) {
-			if (e.which !== Util.ENTER_KEY || !this.$input.val().trim()) {
-				return;
-			}
-
-			Words.create(this.newAttributes());
-			this.$input.val('');
-		},
-
-		// Clear all completed word items, destroying their models.
-		clearCompleted: function () {
-			_.invoke(Words.completed(), 'destroy');
-			return false;
-		},
-
-		toggleAllComplete: function () {
-			//var completed = this.allCheckbox.checked;
-			Words.each(function (word) {
-				word.save({
-					'completed': completed
-				});
-			});
+		nextWord: function () {
+            Words.next();
+            this.render();
 		}
 	});
 

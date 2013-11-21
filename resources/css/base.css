@@ -27,17 +27,61 @@ body {
 	z-index: 2;
 	border-top: 1px dotted #adadad;
 }
+#review-words{
+    position: relative;
+}
 
-.review{
+.word-sec{
+    padding: 4px;
+    margin: 0 30px;
+}
+.word-control {
+    bottom: 0;
+    color: #FFFFFF;
+    font-size: 20px;
+    opacity: 0.5;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    width: 30px;
+}
+.right{
+    top: 0;
+    right: 0;
+}
+.left{
+    left: 0;
+    top: 0;
+}
+.word-sec div{
     padding: 4px;
 }
 
-.review div{
-    padding: 4px;
+.icon{
+    background-image: url("../imgs/glyphicons-halflings.png");
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    margin-top: 1px;
+    vertical-align: text-top;
+    width: 14px;
+    position: absolute;
+    top: 40%;
+}
+
+.left .icon{
+    background-position: -432px -72px;
+    left: 10px;
+}
+
+.right .icon{
+    background-position: -456px -72px;
+    right: 10px;
 }
 
 ul{
-    margin-left: 6px;
     padding-left: 18px;
 }
 
