@@ -26,6 +26,9 @@ define([
         current: function() {
             return this.at(this.idx);
         },
+        pageIndicator: function() {
+            return (this.idx + 1) + '/' + this.length;
+        },
         parse: function(response) {
             return Util.splitWords(response);
         },

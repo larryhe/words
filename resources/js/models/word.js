@@ -11,6 +11,7 @@ define([
 		defaults: {
 			word: '',
             phonetic: '',
+            tag: 'NEW',
 			explains: []
 		},
 

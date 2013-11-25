@@ -26,6 +26,7 @@ require.config({
 		underscore: '../lib/underscore/underscore',
 		backbone: '../lib/backbone/backbone',
 		backboneLocalstorage: '../lib/backbone.localStorage/backbone.localStorage',
+		bootstrap: '../lib/bootstrap/bootstrap',
 		text: '../lib/requirejs-text/text'
 	}
 });

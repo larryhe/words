@@ -4,10 +4,12 @@ define([
 	'underscore',
 	'backbone',
 	'collections/words',
-	'views/words',
-	'text!templates/words.html',
-	'util'
-], function ($, _, Backbone, Words, WordView, wordsTemplate, Util) {
+	'views/word',
+	'views/search',
+	'text!templates/review.tmpl',
+	'util',
+    'bootstrap'
+], function ($, _, Backbone, Words, WordView, SearchView, reviewTmpl, Util) {
 	'use strict';
 
 	var AppView = Backbone.View.extend({
@@ -17,10 +19,16 @@ define([
 		el: '#wordapp',
 
 		// Compile our stats template
-		template: _.template(wordsTemplate),
+		reviewTempl: _.template(reviewTmpl),
 
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
+			'click li #review-words':    'showReview',
+			'click li #add':	        'showAdd',
+			'click li #edit':	    'showEdit',
+			'click li #setting':	    'showSetting',
+			'click li #tnew':	    'tagnew',
+			'click li #tmaster':	    'tagmaster',
 			'click #review-words .left':	'prevWord',
 			'click #review-words .right':	'nextWord'
 		},
@@ -29,14 +37,13 @@ define([
 		// collection, when items are added or changed. Kick things off by
 		// loading any preexisting Words that might be saved in *localStorage*.
 		initialize: function () {
-			this.$main = this.$('#main');
-            this.$word = $('#review-words .word-sec', this.$main);
-			this.listenTo(Words, 'add', this.addOne);
-			this.listenTo(Words, 'reset', this.addAll);
+            this.$word = this.$('#review-words');
+            this.$neww = this.$('#new-word');
+            this.$editw = this.$('#edit-word');
+            this.$setting = this.$('#setting');
 			this.listenTo(Words, 'change:completed', this.filterOne);
 			this.listenTo(Words, 'filter', this.filterAll);
 			this.listenTo(Words, 'all', this.render);
-
 			Words.fetch({url: '/dict/advanced-words.txt', dataType: 'text'});
 		},
 
@@ -44,26 +51,41 @@ define([
 		// of the app doesn't change.
 		render: function () {
 			if (Words.length) {
-				this.$main.show();
-                this.$word.html(this.template(Words.current().attributes));
+                var wordEntry = Words.current().attributes;
+                wordEntry.idx = Words.idx + 1;
+                wordEntry.total = Words.length;
+                this.$word.html(this.reviewTempl(wordEntry));
 			} else {
-				this.$main.hide();
 			}
 			return this;
 		},
 
-		// Add a single word item to the list by creating a view for it, and
-		// appending its element to the `<ul>`.
-		addOne: function (word) {
-			var view = new WordView({ model: word });
-			$('#word-list').append(view.render().el);
+		showAdd: function () {
+            var searchBox = new SearchView({model: Words});
+			this.$neww.html(searchBox.render().el);
+			this.$('section.active').removeClass('active');
+            this.$neww.addClass('active');
 		},
 
-		// Add all items in the **Words** collection at once.
-		addAll: function () {
-			this.$('#word-list').html('');
-			Words.each(this.addOne, this);
-		},
+        showReview: function() {
+            console.log('show review');
+        },
+
+        showEdit: function() {
+            console.log('showedit');
+        },
+
+        showSetting: function() {
+            console.log('showsetting');
+        },
+
+        tagnew: function() {
+            console.log('tagnew');
+        },
+
+        tagmaster: function() {
+            console.log('tagmaster');
+        },
 
 		filterOne: function (word) {
 			word.trigger('visible');

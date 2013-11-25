@@ -9,30 +9,25 @@
 	</head>
 	<body>
 		<section id="wordapp">
-			<header id="header">
-				<h1>My Words</h1>
-			</header>
-			<section id="main">
-                <ul class="nav nav-pills">
-                    <li class="active"><a href="#">Review words</a></li>
-                    <li><a href="#">Add new word</a></li>
-                    <li><a href="#">Setting</a></li>
-                </ul>
+            <ul class="nav nav-pills">
+                <li class="active"><a id="review" href="#review-words" data-toggle="pill">Review</a></li>
+                <li><a id="add" href="#new-word" data-toggle="pill">Add</a></li>
+                <li><a id="edit" href="#edit-word" data-toggle="pill">Edit</a></li>
+                <li><a id="setting" href="#settings" data-toggle="pill">Setting</a></li>
+            </ul>
+            <div id="tabContent" class="tab-content">
+                <section id="review-words" class="tab-pane">
+                </section>
 
-                <section id="review-words">
-                    <div class="word-sec"></div>
-                    <a href="#" class="word-control left">
-                        <span class="icon"></span>
-                    </a>
-                    <a href="#" class="word-control right">
-                        <span class="icon"></span>
-                    </a>
+                <section id="new-word" class="tab-pane">
                 </section>
-                <section id="new-words">
+                
+                <section id="edit-word" class="tab-pane">
                 </section>
-                <section id="settings">
+                
+                <section id="settings" class="tab-pane">
                 </section>
-                </section>
+            </div>
 		</section>
 		<footer id="info">
 			<p>Written by <a href="http://larryhe.me">Larry He</a></p>

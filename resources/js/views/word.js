@@ -3,7 +3,7 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'text!templates/words.html',
+	'text!templates/edit.tmpl',
 	'common'
 ], function ($, _, Backbone, wordsTemplate, Common) {
 	'use strict';

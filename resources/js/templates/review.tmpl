@@ -1,0 +1,22 @@
+<div class="word-sec">
+    <div class="review">
+        <div><label class="word"><%= word%></label> <label class="phonetic"><%= phonetic%></label><span class="badge" title="Click to toggle NEW or MASTERED"><%=tag%></span></div>
+        <ul>
+            <% _.each(explains, function(item) { %>
+            <li>
+                <%= item.mean %>
+                <% if (item.example){ %>
+                    <p><b>Example: </b><%= item.example %></p>
+                <% } %>
+            </li>
+            <% }); %> 
+        </ul>
+    </div>
+</div>
+<a href="#" class="word-control left">
+    <span class="icon"></span>
+</a>
+<a href="#" class="word-control right">
+    <span class="icon"></span>
+</a>
+<div id="page_indicator"> <%=idx + 1%> / <%=total%></div>

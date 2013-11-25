@@ -47,6 +47,7 @@ define([ 'jquery', 'underscore' ],
                         }
                         idx ++;
                     }
+                    word.tag = $.trim(left) || 'NEW';
                 }else{
                     word.word = line;
                 }

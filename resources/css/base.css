@@ -11,29 +11,53 @@ body {
 
 #wordapp {
 	background: #fff;
-	background: rgba(255, 255, 255, 0.9);
 	margin: 0 auto;
     width: 500px;
 	border: 1px solid #ccc;
 	position: relative;
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
-	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2),
-				0 25px 50px 0 rgba(0, 0, 0, 0.15);
+	border-radius: 4px;
+    padding: 45px 15px 15px;
+    position: relative;
+}
+#wordapp:after{
+    color: #BBBBBB;
+    content: "My words";
+    font-size: 12px;
+    font-weight: bold;
+    left: 15px;
+    letter-spacing: 1px;
+    position: absolute;
+    text-transform: uppercase;
+    top: 15px;
 }
 
-#main {
+#tabContent {
 	position: relative;
-	z-index: 2;
-	border-top: 1px dotted #adadad;
+    padding-top: 16px;
 }
+
 #review-words{
     position: relative;
 }
 
+#review-words .badge{
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.search .search_result{
+    padding: 10px 15px;
+    display: none;
+}
+
 .word-sec{
-    padding: 4px;
     margin: 0 30px;
+}
+#page_indicator{
+    text-align: center;
+    width: 100%;
+    padding: 6px 12px;
+    color: #428BCA;
 }
 .word-control {
     bottom: 0;
@@ -52,9 +76,6 @@ body {
 .left{
     left: 0;
     top: 0;
-}
-.word-sec div{
-    padding: 4px;
 }
 
 .icon{
@@ -81,10 +102,6 @@ body {
     right: 10px;
 }
 
-ul{
-    padding-left: 18px;
-}
-
 label.word{
     font-size: 24px;
 }
@@ -93,7 +110,9 @@ label.phonetic{
     font-style: italic;
     margin-left: 8px;
 }
-
+div.explains textarea, div.explains button{
+    margin-bottom: 5px;
+}
 #footer {
 	color: #777;
 	padding: 0 15px;
@@ -116,11 +135,4 @@ label.phonetic{
 
 #info a {
 	color: inherit;
-}
-
-hr {
-	margin: 20px 0;
-	border: 0;
-	border-top: 1px dashed #C5C5C5;
-	border-bottom: 1px dashed #F7F7F7;
 }
