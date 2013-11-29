@@ -3,14 +3,16 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'text!templates/edit.tmpl',
+	'text!templates/word.tmpl',
 	'common'
 ], function ($, _, Backbone, wordsTemplate, Common) {
 	'use strict';
 
-	var TodoView = Backbone.View.extend({
+	var wordView = Backbone.View.extend({
 
-		tagName:  'li',
+		tagName:  'div',
+
+        className: 'word-entry',
 
 		template: _.template(wordsTemplate),
 
@@ -23,8 +25,8 @@ define([
 			'blur .edit':		'close'
 		},
 
-		// The TodoView listens for changes to its model, re-rendering. Since there's
-		// a one-to-one correspondence between a **Todo** and a **TodoView** in this
+		// The Word listens for changes to its model, re-rendering. Since there's
+		// a one-to-one correspondence between a **Word** and a **Word** in this
 		// app, we set a direct reference on the model for convenience.
 		initialize: function () {
 			this.listenTo(this.model, 'change', this.render);
@@ -35,10 +37,6 @@ define([
 		// Re-render the titles of the todo item.
 		render: function () {
 			this.$el.html(this.template(this.model.toJSON()));
-			this.$el.toggleClass('completed', this.model.get('completed'));
-
-			this.toggleVisible();
-			this.$input = this.$('.edit');
 			return this;
 		},
 
@@ -91,5 +89,5 @@ define([
 		}
 	});
 
-	return TodoView;
+	return wordView;
 });

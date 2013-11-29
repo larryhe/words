@@ -3,8 +3,9 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+    'common',
 	'text!templates/search.tmpl'
-], function ($, _, Backbone, searchTmpl) {
+], function ($, _, Backbone, Common, searchTmpl) {
 	'use strict';
 
 	var SearchView = Backbone.View.extend({
@@ -46,17 +47,19 @@ define([
 		},
 
 		search: function (e) {
-            var text = this.$('input').val(),
-                word;
-            if(text){
-                word = this.model.where({word: text});
-                if(word.length > 0){
-                    var $help = this.$('.search_result');
-                    text = $help.html();
-                    $help.html(text.replace('{0}', word[0].get('word')));
-                    $help.show();
-                }else{
-                    trigger('newWord');
+            var text, word; 
+            if((e.type === 'keypress' && e.which === Common.ENTER_KEY) || e.type === 'click'){
+                text = this.$('input').val();
+                if(text){
+                    word = this.model.where({word: text});
+                    if(word.length > 0){
+                        var $help = this.$('.search_result');
+                        text = $help.html();
+                        $help.html(text.replace('{0}', word[0].get('word')));
+                        $help.show();
+                    }else{
+                        this.model.trigger('newWord', text);
+                    }
                 }
             }
 		}

@@ -41,9 +41,8 @@ define([
             this.$neww = this.$('#new-word');
             this.$editw = this.$('#edit-word');
             this.$setting = this.$('#setting');
-			this.listenTo(Words, 'change:completed', this.filterOne);
-			this.listenTo(Words, 'filter', this.filterAll);
 			this.listenTo(Words, 'all', this.render);
+			this.listenTo(Words, 'newWord', this.newWord);
 			Words.fetch({url: '/dict/advanced-words.txt', dataType: 'text'});
 		},
 
@@ -51,7 +50,7 @@ define([
 		// of the app doesn't change.
 		render: function () {
 			if (Words.length) {
-                var wordEntry = Words.current().attributes;
+                var wordEntry = Words.current().toJSON();
                 wordEntry.idx = Words.idx + 1;
                 wordEntry.total = Words.length;
                 this.$word.html(this.reviewTempl(wordEntry));
@@ -91,8 +90,9 @@ define([
 			word.trigger('visible');
 		},
 
-		filterAll: function () {
-			Words.each(this.filterOne, this);
+		newWord: function (word) {
+            var view = new WordView({model: Words.newWord(word)});
+            this.$neww.html(view.render().el);
 		},
 
 		prevWord: function () {

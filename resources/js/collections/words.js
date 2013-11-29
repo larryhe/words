@@ -32,6 +32,9 @@ define([
         parse: function(response) {
             return Util.splitWords(response);
         },
+        newWord: function(word) {
+            return new Word({word: word});
+        },
 		// word are sorted by their original insertion order.
 		comparator: function (word) {
 			return word.get('order');
