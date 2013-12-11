@@ -35,15 +35,7 @@ define([ 'jquery', 'underscore' ],
                             word.phonetic = '[' + section + ']';
                         }else{
                             word.explains = word.explains || [];
-                            items = section.split("Example:");
-                            item = {};
-                            if(items.length > 0){
-                                item.mean = items[0];
-                                item.example = items[1];
-                            }else{
-                                item.mean = items[0];
-                            }
-                            word.explains.push(item);
+                            word.explains.push(section);
                         }
                         idx ++;
                     }

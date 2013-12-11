@@ -12,8 +12,14 @@ define([
 			word: '',
             phonetic: '',
             tag: 'NEW',
-			explains: []
+			explains: ['']
 		},
+
+        addExplanation: function() {
+            var explains = this.get('explains');
+            explains.push('put word meaing here. Example: word example follows');
+            this.set('explains', explains);
+        },
 
 		// Toggle the `completed` state of this word item.
 		toggle: function () {
