@@ -1,0 +1,11 @@
+{
+  "name": "best-practices",
+  "description": "A package using versioning best-practices",
+  "author": "Charlie Robbins <charlie@nodejitsu.com>",
+  "dependencies": {
+      "MD5": "1.2.x",
+      "express": "3.4.x",
+      "underscore": "1.5.x"
+    }
+  "engine": "node >= 0.11.1"
+}
