@@ -42,7 +42,17 @@ define([
 		},
 
         createWord: function() {
-            console.log('create word');
+            var explains = [];
+            var self = this;
+            this.$('textarea').each(function(){
+                var val = self.$(this).val();
+                if(val){
+                    explains.push(val);
+                }
+            })
+            this.model.save({word: this.$('#inputWord').val(),
+                            phonetic: this.$('#inputPhonetics').val(), 
+                            explains: explains}, {url: '/node/add'});
         },
 
 		// Close the `"editing"` mode, saving changes to the todo.
@@ -59,7 +69,7 @@ define([
 		},
 
 		addExplanation: function () {
-			this.model.addExplanation();
+			$('<textarea>').addClass('form-control').prop('rows', 3).insertAfter(this.$('.explains textarea:last'));
 		}
 	});
 

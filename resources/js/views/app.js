@@ -4,12 +4,13 @@ define([
 	'underscore',
 	'backbone',
 	'collections/words',
+	'models/config',
 	'views/word',
 	'views/search',
 	'text!templates/review.tmpl',
 	'util',
     'bootstrap'
-], function ($, _, Backbone, Words, WordView, SearchView, reviewTmpl, Util) {
+], function ($, _, Backbone, Words,config, WordView, SearchView, reviewTmpl, Util) {
 	'use strict';
 
 	var AppView = Backbone.View.extend({
@@ -41,20 +42,25 @@ define([
             this.$neww = this.$('#new-word');
             this.$editw = this.$('#edit-word');
             this.$setting = this.$('#setting');
+			this.listenTo(config, 'change', this.loadWords);
 			this.listenTo(Words, 'all', this.render);
 			this.listenTo(Words, 'newWord', this.newWord);
-			Words.fetch({url: '/dict/advanced-words.txt', dataType: 'text'});
+			config.load();
 		},
+
+        loadWords: function() {
+            Words.loadWords(config.get('active'));
+        },
 
 		// Re-rendering the App just means refreshing the statistics -- the rest
 		// of the app doesn't change.
 		render: function () {
 			if (Words.length) {
                 var wordEntry = Words.current().toJSON();
-                wordEntry.idx = Words.idx + 1;
+                wordEntry.idx = Words.idx;
+                console.log('idx=' + wordEntry.idx);
                 wordEntry.total = Words.length;
                 this.$word.html(this.reviewTempl(wordEntry));
-			} else {
 			}
 			return this;
 		},

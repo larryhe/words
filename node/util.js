@@ -53,6 +53,12 @@ function editWord (dict, word) {
     fs.writeFileSync(dict, lines.join('\n'));
 }
 
+function listDicts () {
+    var files = fs.readdirSync('../dict');
+    return files;
+}
+
 module.exports.authenticate = authenticate;
 module.exports.addWord = addWord;
 module.exports.editWord = editWord;
+module.exports.dicts = listDicts;

@@ -35,6 +35,9 @@ define([
         newWord: function(word) {
             return new Word({word: word});
         },
+        loadWords: function(dict) {
+            this.fetch({url: '/dict/' + dict, dataType: 'text'});
+        },
 		// word are sorted by their original insertion order.
 		comparator: function (word) {
 			return word.get('order');

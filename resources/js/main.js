@@ -5,6 +5,14 @@
 require.config({
 	// The shim config allows us to configure dependencies for
 	// scripts that do not call define() to register a module
+    baseUrl: 'js',
+	paths: {
+		jquery: 'lib/jquery/jquery',
+		underscore: 'lib/underscore/underscore',
+		backbone: 'lib/backbone/backbone',
+		bootstrap: 'lib/bootstrap/bootstrap',
+		text: 'lib/requirejs-text/text'
+	},
 	shim: {
 		underscore: {
 			exports: '_'
@@ -15,19 +23,7 @@ require.config({
 				'jquery'
 			],
 			exports: 'Backbone'
-		},
-		backboneLocalstorage: {
-			deps: ['backbone'],
-			exports: 'Store'
 		}
-	},
-	paths: {
-		jquery: '../lib/jquery/jquery',
-		underscore: '../lib/underscore/underscore',
-		backbone: '../lib/backbone/backbone',
-		backboneLocalstorage: '../lib/backbone.localStorage/backbone.localStorage',
-		bootstrap: '../lib/bootstrap/bootstrap',
-		text: '../lib/requirejs-text/text'
 	}
 });
 

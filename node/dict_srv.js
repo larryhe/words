@@ -20,4 +20,7 @@ app.get('/node/tag', function(req, res) {
     res.send('tag');
 });
 
+app.get('/node/dicts', function(req, res) {
+    res.send(util.dicts());
+});
 app.listen(9898);
