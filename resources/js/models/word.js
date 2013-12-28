@@ -1,8 +1,9 @@
 /*global define*/
 define([
 	'underscore',
+	'models/config',
 	'backbone'
-], function (_, Backbone) {
+], function (_, config, Backbone) {
 	'use strict';
 
 	var WordModel = Backbone.Model.extend({
@@ -12,13 +13,16 @@ define([
 			word: '',
             phonetic: '',
             tag: 'NEW',
-			explains: ['']
+			explains: []
 		},
 
         addExplanation: function() {
             var explains = this.get('explains');
-            explains.push('put word meaing here. Example: word example follows');
-            this.set('explains', explains);
+        },
+
+        add: function(obj) {
+            obj.dict = config.get('active');
+            this.save(obj, {url: '/node/add'});
         },
 
 		// Toggle the `completed` state of this word item.

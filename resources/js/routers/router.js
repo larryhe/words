@@ -14,7 +14,8 @@ define([
 
 		setFilter: function (param) {
 			// Set the current filter to be used
-			Common.WordFilter = param.trim() || '';
+            var path = param || '';
+			Common.WordFilter = path.trim();
 
 			// Trigger a collection filter event, causing hiding/unhiding
 			// of the Word view items

@@ -26,6 +26,7 @@ define([
 		events: {
 			'click li #review-words':    'showReview',
 			'click li #add':	        'showAdd',
+			'click #new-word .submit':	        'createWord',
 			'click li #edit':	    'showEdit',
 			'click li #setting':	    'showSetting',
 			'click li #tnew':	    'tagnew',
@@ -58,7 +59,6 @@ define([
 			if (Words.length) {
                 var wordEntry = Words.current().toJSON();
                 wordEntry.idx = Words.idx;
-                console.log('idx=' + wordEntry.idx);
                 wordEntry.total = Words.length;
                 this.$word.html(this.reviewTempl(wordEntry));
 			}
@@ -97,9 +97,21 @@ define([
 		},
 
 		newWord: function (word) {
-            var view = new WordView({model: Words.newWord(word)});
-            this.$neww.html(view.render().el);
+            this.wordView = new WordView({model: Words.newWord(word)});
+            this.$neww.html(this.wordView.render().el);
 		},
+        createWord: function() {
+            var self = this;
+            var wordEntry = this.wordView.getValue();
+            wordEntry.dict = config.get('active');
+            var word = Words.create(wordEntry, {url: '/node/add', dataType: 'text', success: function(res){
+                self.showAdd();
+            }});
+        },
+
+        postCreated: function(data) {
+            console.log('post created'+data);
+        },
 
 		prevWord: function () {
             Words.prev();

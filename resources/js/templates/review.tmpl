@@ -1,11 +1,11 @@
 <div class="word-sec">
     <div class="review">
-        <div><label class="word"><%= word%></label> <label class="phonetic"><%= phonetic%></label><span class="badge" title="Click to toggle NEW or MASTERED"><%=tag%></span></div>
+        <div><label class="word"><%= word%></label> <label class="phonetic"><%=phonetic%></label><span class="badge" title="Click to toggle NEW or MASTERED"><%=tag%></span></div>
         <ul>
         <%
         _.each(explains, function(item) { 
                     var items = item.split("Example:");
-                    if(items.length > 0){
+                    if(items.length > 1){
                         print('<li>' + items[0] + '<p><b>Example:</b>' + items[1] + '</p></li>');
                     }else{
                         print('<li>' + items[0] + '</li>');

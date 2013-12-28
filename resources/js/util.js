@@ -1,11 +1,6 @@
 define([ 'jquery', 'underscore' ], 
         function($, _){
 
-            var dicts = [
-                        {name: 'Advanced Words', path: '/dict/advanced-words.txt'},
-                        {name: 'Daily Words', path: '/dict/daily-words.txt'}
-                ];
-
             function splitWords(text){
                 var lines,
                     words = [];
@@ -32,7 +27,7 @@ define([ 'jquery', 'underscore' ],
                         section = $.trim(section);
                         left = left.substring(end + 1);
                         if(idx == 0){
-                            word.phonetic = '[' + section + ']';
+                            word.phonetic = section ? ('[' + section + ']') : '';
                         }else{
                             word.explains = word.explains || [];
                             word.explains.push(section);
@@ -46,6 +41,6 @@ define([ 'jquery', 'underscore' ],
                 return word;
             }
 
-            return { splitWords: splitWords, dicts: dicts};
+            return { splitWords: splitWords};
         }
 );

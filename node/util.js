@@ -13,13 +13,14 @@ function _dict (dname) {
 function _wordEntry (word) {
     var a = [];
     a.push(word.word);
-    if(word.phonetic){
-        a.push(' ' + word.phonetic);
-    }
+    a.push(' [' + word.phonetic + ']');
     if(word.explains && word.explains.length > 0){
         _.each(word.explains, function(item){
-            a.push(' ' + item);
+            a.push(' [' + item + ']');
         });
+    }
+    if(word.tag){
+        a.push(' ' + word.tag);
     }
     return a.join('');
 }
@@ -38,7 +39,7 @@ function authenticate (username, pass) {
 
 function addWord (dict, word) {
     var dict = _dict(dict);
-    fs.appendFileSync(dict, _wordEntry(word) + '\n', 'utf8');
+    fs.appendFileSync(dict, '\n'+_wordEntry(word), 'utf8');
 }
 
 function editWord (dict, word) {

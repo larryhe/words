@@ -11,12 +11,16 @@ require.config({
 		underscore: 'lib/underscore/underscore',
 		backbone: 'lib/backbone/backbone',
 		bootstrap: 'lib/bootstrap/bootstrap',
+        spin: 'lib/spin',
 		text: 'lib/requirejs-text/text'
 	},
 	shim: {
 		underscore: {
 			exports: '_'
 		},
+        bootstrap: {
+            deps: ['jquery']
+        },
 		backbone: {
 			deps: [
 				'underscore',
