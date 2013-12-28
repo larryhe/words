@@ -4,13 +4,15 @@ define([
 	'underscore',
 	'backbone',
 	'models/config',
-	'text!templates/review.tmpl'
-], function ($, _, Backbone, config, reviewTmpl) {
+	'text!templates/setting.tmpl'
+], function ($, _, Backbone, config, settingTmpl) {
 	'use strict';
 
-	var Review = Backbone.View.extend({
+	var Setting = Backbone.View.extend({
 
-		template: _.template(reviewTmpl),
+        className: 'setting-container',
+
+		template: _.template(settingTmpl),
 
 		// The DOM events specific to an item.
 		events: {
@@ -57,5 +59,5 @@ define([
 
 	});
 
-	return Review;
+	return Setting;
 });

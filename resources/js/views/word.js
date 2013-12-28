@@ -19,7 +19,7 @@ define([
 
 		// The DOM events specific to an item.
 		events: {
-			'click .more':	'addExplanation',
+			'click span.add':	'addExplanation',
 			'click .cancel':		'close'
 		},
 
@@ -57,19 +57,11 @@ define([
 
 		// Close the `"editing"` mode, saving changes to the todo.
 		close: function () {
-			var value = this.$input.val().trim();
-
-			if (value) {
-				this.model.save({ title: value });
-			} else {
-				this.clear();
-			}
-
-			this.$el.removeClass('editing');
+            $('ul.nav a#review').tab('show');
 		},
 
 		addExplanation: function () {
-			$('<textarea>').addClass('form-control').prop('rows', 3).insertAfter(this.$('.explains textarea:last'));
+			$('<textarea>').addClass('form-control').prop('rows', 3).appendTo(this.$('.explains'));
 		}
 	});
 

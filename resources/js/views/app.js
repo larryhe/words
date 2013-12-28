@@ -5,12 +5,14 @@ define([
 	'backbone',
 	'collections/words',
 	'models/config',
+    'views/review',
 	'views/word',
 	'views/search',
-	'text!templates/review.tmpl',
+	'views/setting',
+	'text!templates/footer.tmpl',
 	'util',
     'bootstrap'
-], function ($, _, Backbone, Words,config, WordView, SearchView, reviewTmpl, Util) {
+], function ($, _, Backbone, Words,config,ReviewView, WordView, SearchView,SettingView, footerTmpl, Util) {
 	'use strict';
 
 	var AppView = Backbone.View.extend({
@@ -20,17 +22,15 @@ define([
 		el: '#wordapp',
 
 		// Compile our stats template
-		reviewTempl: _.template(reviewTmpl),
+		footerTmpl: _.template(footerTmpl),
 
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
-			'click li #review-words':    'showReview',
 			'click li #add':	        'showAdd',
 			'click #new-word .submit':	        'createWord',
 			'click li #edit':	    'showEdit',
+			'click #edit-word .submit':	        'updateWord',
 			'click li #setting':	    'showSetting',
-			'click li #tnew':	    'tagnew',
-			'click li #tmaster':	    'tagmaster',
 			'click #review-words .left':	'prevWord',
 			'click #review-words .right':	'nextWord'
 		},
@@ -42,9 +42,9 @@ define([
             this.$word = this.$('#review-words');
             this.$neww = this.$('#new-word');
             this.$editw = this.$('#edit-word');
-            this.$setting = this.$('#setting');
+            this.$setting = this.$('#settings');
 			this.listenTo(config, 'change', this.loadWords);
-			this.listenTo(Words, 'all', this.render);
+			this.listenTo(Words, 'sync', this.render);
 			this.listenTo(Words, 'newWord', this.newWord);
 			config.load();
 		},
@@ -57,10 +57,10 @@ define([
 		// of the app doesn't change.
 		render: function () {
 			if (Words.length) {
-                var wordEntry = Words.current().toJSON();
-                wordEntry.idx = Words.idx;
-                wordEntry.total = Words.length;
-                this.$word.html(this.reviewTempl(wordEntry));
+                var review = new ReviewView({model: Words.current()});
+                this.$word.empty();
+                this.$word.append(review.render().el);
+                this.$word.append(this.footerTmpl({idx: Words.idx, total: Words.length}));
 			}
 			return this;
 		},
@@ -68,28 +68,18 @@ define([
 		showAdd: function () {
             var searchBox = new SearchView({model: Words});
 			this.$neww.html(searchBox.render().el);
-			this.$('section.active').removeClass('active');
-            this.$neww.addClass('active');
 		},
 
-        showReview: function() {
-            console.log('show review');
-        },
-
         showEdit: function() {
-            console.log('showedit');
+            this.wordView = new WordView({model: Words.current()});
+            this.$editw.html(this.wordView.render().el);
         },
 
         showSetting: function() {
-            console.log('showsetting');
-        },
-
-        tagnew: function() {
-            console.log('tagnew');
-        },
-
-        tagmaster: function() {
-            console.log('tagmaster');
+            if(!this.settingView){
+                this.settingView = new SettingView({model: config});
+                this.$setting.html(this.settingView.render().el);
+            }
         },
 
 		filterOne: function (word) {
@@ -109,8 +99,13 @@ define([
             }});
         },
 
-        postCreated: function(data) {
-            console.log('post created'+data);
+        updateWord: function() {
+            var wordEntry = this.wordView.getValue();
+            var word = this.wordView.model;
+            wordEntry.dict = config.get('active');
+            word.save(wordEntry, {url: '/node/update', dataType: 'text', success: function(res){
+                $('ul.nav a#review').tab('show');
+            }});
         },
 
 		prevWord: function () {

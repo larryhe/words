@@ -10,7 +10,9 @@ define([
 		// and ensure that each word created has `word` and `phonetic` keys.
 		defaults: {
 			active: '',
-            dict: []
+            dict: [],
+            mode: 'mixed',
+            order: 'desc'
 		},
         load: function() {
             this.fetch({url: '/node/dicts'});

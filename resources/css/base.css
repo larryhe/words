@@ -101,6 +101,17 @@ body {
     background-position: -456px -72px;
     right: 10px;
 }
+.add-del-word span{
+    background-image: url("../imgs/glyphicons-halflings.png");
+    background-position: -0 -95px;
+    height: 14px;
+    width: 14px;
+    display: inline-block;
+    cursor: pointer;
+}
+.add-del-word .del{
+    background-position: -24px -95px;
+}
 
 label.word{
     font-size: 24px;

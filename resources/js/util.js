@@ -6,7 +6,9 @@ define([ 'jquery', 'underscore' ],
                     words = [];
                 lines = text.split("\n");
                 for (var i = 0; i < lines.length; i++) {
-                    words.push(parseLine(lines[i]));
+                    if(lines[i]){
+                        words.push(parseLine(lines[i]));
+                    }
                 };
                 return words;
             }
