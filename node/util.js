@@ -1,7 +1,7 @@
 var fs = require('fs');
 var md5 = require('MD5');
 var _ = require('underscore');
-var BASE_DIR = "../dict/";
+var BASE_DIR = process.argv[2] || '../dict/';
 function _passwdEntry (username, pass) {
     return username + ":" + md5(pass);
 }
@@ -27,7 +27,7 @@ function _wordEntry (word) {
 
 function authenticate (username, pass) {
     var ret = false,
-        all =  fs.readFileSync('./passwd', 'utf8').split('\n');
+        all =  fs.readFileSync(__dirname + '/passwd', 'utf8').split('\n');
       for (var i = 0; i < all.length; i++) {
           if(all[i] == _passwdEntry(username, pass)){
               ret = true;
@@ -55,7 +55,7 @@ function editWord (dict, word) {
 }
 
 function listDicts () {
-    var files = fs.readdirSync('../dict');
+    var files = fs.readdirSync(BASE_DIR);
     return files;
 }
 
