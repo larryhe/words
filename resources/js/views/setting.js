@@ -16,7 +16,7 @@ define([
 
 		// The DOM events specific to an item.
 		events: {
-			'click span.badge':	'toggleState',
+			'change select':	'resetDict',
 		},
 
 		// The TodoView listens for changes to its model, re-rendering. Since there's
@@ -32,28 +32,14 @@ define([
 			return this;
 		},
 
-		toggleState: function (event) {
+		resetDict: function (event) {
             var target = $(event.target);
-            if(target.text() == 'NEW'){
-                target.text('MASTERED');
+            if(target.hasClass('dict')){
+                config.set({active: target.val()});
+            }else if(target.hasClass('mode')){
+                config.set({mode: target.val()});
             }else{
-                target.text('NEW');
-            }
-            this.model.save({tag: target.text(), dict: config.get('active')},{url: '/node/update', dataType: 'text'});
-		},
-
-		// Switch this view into `"editing"` mode, displaying the input field.
-		edit: function () {
-			this.$el.addClass('editing');
-			this.$input.focus();
-		},
-
-		search: function (e) {
-            var text = this.$input.val(),
-                word;
-            if(text){
-                word = this.model.where({word: text});
-                console.log(word);
+                config.set({order: target.val()});
             }
 		}
 

@@ -49,7 +49,7 @@ define([
 			config.load();
 		},
 
-        loadWords: function() {
+        loadWords: function(evt) {
             Words.loadWords(config.get('active'));
         },
 
